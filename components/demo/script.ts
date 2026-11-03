@@ -77,9 +77,13 @@ export const INTRO_MS = 240;
 export const END_MS: number = LOOP_MS - 1;
 
 /** How tall the pinned section is, in viewport heights. The frame holds the
- *  viewport for the first 100vh of it, so the remaining 260vh is the scroll
- *  distance that the whole timeline is spread across. */
-export const TRACK_VH = 360;
+ *  viewport for the first 100vh of it, so the remaining TRACK_VH - 100 is the
+ *  scroll distance the whole timeline is spread across.
+ *
+ *  At 360 the 26s script compressed into ~2300px, which read as frantic: a
+ *  flick of the wheel crossed a whole beat. 820 gives ~6500px, about 250px of
+ *  scroll per second of animation, so typing reads as typing. */
+export const TRACK_VH = 820;
 
 /** The last frame of a beat — the state it has settled into. */
 export function beatEnd(beat: number): number {

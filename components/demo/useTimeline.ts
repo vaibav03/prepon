@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { RefObject } from "react";
-import { useMotionValueEvent, useScroll } from "motion/react";
+import { useMotionValueEvent, useScroll, useSpring } from "motion/react";
 
 import {
   BEATS,
@@ -66,21 +66,35 @@ export function useTimeline({ mode, track, frame }: TimelineOptions): Timeline {
     target: track,
     offset: ["start start", "end end"],
   });
+
+  // Raw wheel input is steppy — a trackpad flick arrives as a handful of large
+  // jumps, which makes typing stutter rather than type. A light spring smooths
+  // the position without lagging behind the finger.
+  const smoothed = useSpring(scrollYProgress, {
+    stiffness: 140,
+    damping: 32,
+    mass: 0.4,
+    restDelta: 0.0005,
+  });
+
   const [scrollT, setScrollT] = useState(0);
 
-  useMotionValueEvent(scrollYProgress, "change", (p) => {
+  useMotionValueEvent(smoothed, "change", (p) => {
     setScrollT(clamp01(p) * END_MS);
   });
 
-  // Landing mid-section (a refresh, a #demo link) must not start at zero.
-  // A frame late, so the scroll container has been measured by then.
+  // Landing mid-section (a refresh, a #demo link) must not start at zero, and
+  // must not spring up from it either. A frame late, so the scroll container
+  // has been measured by then.
   useEffect(() => {
     if (mode !== "scroll") return;
     const raf = requestAnimationFrame(() => {
-      setScrollT(clamp01(scrollYProgress.get()) * END_MS);
+      const p = clamp01(scrollYProgress.get());
+      smoothed.jump(p);
+      setScrollT(p * END_MS);
     });
     return () => cancelAnimationFrame(raf);
-  }, [mode, scrollYProgress]);
+  }, [mode, scrollYProgress, smoothed]);
 
   /* -- timer-driven ----------------------------------------------------- */
   const clock = useRef(0);
