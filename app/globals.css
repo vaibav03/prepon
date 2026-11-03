@@ -1,0 +1,444 @@
+@import "tailwindcss";
+
+/* ===========================================================================
+   Prepon design system.
+
+   Dark is the primary theme and the only one designed. The values below are
+   measured from the reference register: warm near-black page, bone-white
+   serif headings, small warm-grey sans body, one cool accent used sparingly.
+
+   Light exists only so the ThemeToggle keeps compiling. Do not design for it.
+   =========================================================================== */
+
+:root {
+  /* --- surfaces ------------------------------------------------------- */
+  --surface-page: #161413; /* warm near-black, the page */
+  --surface-raised: #1e1c1b; /* sections lifted off the page */
+  --surface-card: #262424; /* cards, secondary buttons */
+  --surface-sunken: #110f0e; /* wells, inputs, inset areas */
+
+  /* Translucent surface for blurred chrome (nav pill, floating bars). */
+  --surface-blur: rgba(38, 36, 36, 0.8);
+  --surface-blur-strong: rgba(22, 20, 19, 0.88);
+
+  /* --- text ----------------------------------------------------------- */
+  --text-primary: #e8e2d9; /* bone white, headings */
+  --text-secondary: #c3bdb6; /* body copy */
+  --text-faint: #988f86; /* eyebrows, labels, metadata */
+
+  /* --- hairlines ------------------------------------------------------ */
+  --hairline: rgba(255, 255, 255, 0.12);
+  --hairline-strong: rgba(255, 255, 255, 0.2);
+
+  /* --- accent. Links and the active-step progress line. Nothing else. -- */
+  --accent: #4c8df6;
+  --accent-soft: rgba(76, 141, 246, 0.14);
+  --accent-contrast: #161413;
+
+  /* --- rule states ---------------------------------------------------- */
+  --state-live: #86b894;
+  --state-live-wash: rgba(134, 184, 148, 0.12);
+  --state-proposed: #8fb3d6;
+  --state-proposed-wash: rgba(143, 179, 214, 0.12);
+  --state-expiring: #d2a556;
+  --state-expiring-wash: rgba(210, 165, 86, 0.12);
+  --state-retired: #8a827a;
+  --state-retired-wash: rgba(138, 130, 122, 0.1);
+
+  /* --- authorship: text the user wrote vs text the AI wrote ------------ */
+  --ink-user: #f0ebe2;
+  --ink-user-wash: rgba(232, 226, 217, 0.08);
+  --ink-user-edge: rgba(232, 226, 217, 0.28);
+  --ink-ai: #b4ada5;
+  --ink-ai-wash: rgba(255, 255, 255, 0.035);
+  --ink-ai-edge: rgba(255, 255, 255, 0.1);
+
+  /* --- product frame chrome ------------------------------------------- */
+  --frame-bg: #1a1817; /* body of a simulated app frame */
+  --frame-bar: #211f1e; /* its faint top bar */
+  --frame-border: rgba(255, 255, 255, 0.1);
+  --frame-shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.75);
+
+  /* --- photographic plates (CSS only, no image files) ------------------
+     Each tone is a base, a warm light source, a cool fill and a deep floor.
+     All four are heavily desaturated on purpose; if a plate reads as
+     colourful it has drifted and is wrong. ------------------------------ */
+  --plate-ocean-base: #2b3336;
+  --plate-ocean-light: #5c6c70;
+  --plate-ocean-fill: #39474d;
+  --plate-ocean-deep: #15191b;
+
+  --plate-dune-base: #3a332c;
+  --plate-dune-light: #7d7063;
+  --plate-dune-fill: #4e443a;
+  --plate-dune-deep: #1b1714;
+
+  --plate-coast-base: #313733;
+  --plate-coast-light: #6d7770;
+  --plate-coast-fill: #404843;
+  --plate-coast-deep: #171a18;
+
+  --plate-dusk-base: #332c30;
+  --plate-dusk-light: #6e6168;
+  --plate-dusk-fill: #453b40;
+  --plate-dusk-deep: #191517;
+
+  --plate-slate-base: #2d2e33;
+  --plate-slate-light: #63656e;
+  --plate-slate-fill: #3b3c43;
+  --plate-slate-deep: #16171a;
+
+  --plate-ember-base: #38302c;
+  --plate-ember-light: #806a5e;
+  --plate-ember-fill: #4b3f38;
+  --plate-ember-deep: #1a1513;
+
+  /* --- white pill button + kit chrome --------------------------------- */
+  --button-white: #f4f1ec;
+  --button-white-ink: #161413;
+  --nav-shadow: 0 12px 32px -20px rgba(0, 0, 0, 0.8);
+  --plate-vignette-mid: rgba(12, 10, 9, 0.42);
+  --plate-vignette-edge: rgba(12, 10, 9, 0.62);
+  --plate-inset: inset 0 1px 0 0 rgba(255, 255, 255, 0.07),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+
+  /* --- focus ---------------------------------------------------------- */
+  --focus-ring: #4c8df6;
+
+  /* --- measure --------------------------------------------------------
+     Body copy is small sans, so the measure is set in sans characters:
+     58-62ch is where a 15px line stops stranding short paragraphs. The
+     serif reading surfaces inside the product share it. ------------------ */
+  --measure-prose: 60ch;
+  --measure-narrow: 52ch;
+  --measure-wide: 78ch;
+  --measure-page: 1200px; /* the centred content column */
+
+  /* --- vertical rhythm -------------------------------------------------
+     Tight inside a component, moderate between them. These five numbers
+     are the only ones allowed to separate two sections; nothing on the
+     page adds a one-off margin on top of them.
+
+     Phone values first, stepped up at 768px below. ---------------------- */
+  --band-y: 3rem; /* 48px - one band, top and bottom */
+  --band-y-lg: 3.5rem; /* 56px - a band that needs a little more air */
+  --band-y-tight: 2rem; /* 32px - the seam where two bands meet */
+  --head-gap: 1.75rem; /* 28px - section header down to its content */
+  --nav-clearance: 5.5rem; /* 88px - the fixed pill, plus breathing room */
+
+  /* --- motion ----------------------------------------------------------
+     One entering curve and one exiting curve for the whole page. Strong
+     ease-out: it starts fast, so the thing being revealed is legible
+     almost immediately. Nothing on this page uses ease-in. -------------- */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* The desktop step of the vertical rhythm. Sections are 72-88px, not the
+   120-160px the reference can afford because it fills it with photography. */
+@media (min-width: 768px) {
+  :root {
+    --band-y: 4.5rem; /* 72px */
+    --band-y-lg: 5.5rem; /* 88px */
+    --band-y-tight: 3.5rem; /* 56px */
+    --head-gap: 2.25rem; /* 36px */
+    --nav-clearance: 6.5rem; /* 104px */
+  }
+}
+
+/* Secondary. Kept compiling for the ThemeToggle; not a designed surface. */
+:root[data-theme="light"] {
+  --surface-page: #f7f4ed;
+  --surface-raised: #fffdf8;
+  --surface-card: #ffffff;
+  --surface-sunken: #efeadf;
+
+  --surface-blur: rgba(255, 253, 248, 0.82);
+  --surface-blur-strong: rgba(247, 244, 237, 0.9);
+
+  --text-primary: #1b1916;
+  --text-secondary: #565046;
+  --text-faint: #8d8578;
+
+  --hairline: rgba(27, 25, 22, 0.14);
+  --hairline-strong: rgba(27, 25, 22, 0.24);
+
+  --accent: #2563c9;
+  --accent-soft: rgba(37, 99, 201, 0.1);
+  --accent-contrast: #fffdf8;
+
+  --state-live: #3c6b4b;
+  --state-live-wash: rgba(60, 107, 75, 0.12);
+  --state-proposed: #2f5d80;
+  --state-proposed-wash: rgba(47, 93, 128, 0.12);
+  --state-expiring: #94681a;
+  --state-expiring-wash: rgba(148, 104, 26, 0.12);
+  --state-retired: #8d8578;
+  --state-retired-wash: rgba(141, 133, 120, 0.1);
+
+  --ink-user: #1b1916;
+  --ink-user-wash: rgba(27, 25, 22, 0.06);
+  --ink-user-edge: rgba(27, 25, 22, 0.24);
+  --ink-ai: #3f3a33;
+  --ink-ai-wash: rgba(27, 25, 22, 0.03);
+  --ink-ai-edge: rgba(27, 25, 22, 0.1);
+
+  --frame-bg: #fffdf8;
+  --frame-bar: #f3efe6;
+  --frame-border: rgba(27, 25, 22, 0.12);
+  --frame-shadow: 0 24px 60px -32px rgba(27, 25, 22, 0.28);
+
+  --button-white: #1b1916;
+  --button-white-ink: #fffdf8;
+  --nav-shadow: 0 12px 32px -24px rgba(27, 25, 22, 0.35);
+  --plate-vignette-mid: rgba(27, 25, 22, 0.14);
+  --plate-vignette-edge: rgba(27, 25, 22, 0.22);
+  --plate-inset: inset 0 1px 0 0 rgba(255, 255, 255, 0.5),
+    inset 0 0 0 1px rgba(27, 25, 22, 0.06);
+
+  --focus-ring: #2563c9;
+}
+
+/* ===========================================================================
+   Tailwind theme bridge. Every token above is reachable as a utility.
+   =========================================================================== */
+
+@theme inline {
+  /* fonts. Geist for everything that is software, Newsreader for display. */
+  --font-serif: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-geist), var(--font-inter), ui-sans-serif, system-ui,
+    sans-serif;
+
+  /* surfaces -> bg-surface / bg-raised / bg-card / bg-sunken */
+  --color-surface: var(--surface-page);
+  --color-raised: var(--surface-raised);
+  --color-card: var(--surface-card);
+  --color-sunken: var(--surface-sunken);
+  --color-blur: var(--surface-blur);
+  --color-blur-strong: var(--surface-blur-strong);
+
+  /* text -> text-primary / text-secondary / text-faint */
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-faint: var(--text-faint);
+
+  /* hairlines -> border-hairline / border-hairline-strong */
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+
+  /* white pill -> bg-button-white / text-button-ink */
+  --color-button-white: var(--button-white);
+  --color-button-ink: var(--button-white-ink);
+
+  /* accent -> text-accent / bg-accent-soft */
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-contrast: var(--accent-contrast);
+
+  /* rule states -> text-live / bg-live-wash / border-expiring ... */
+  --color-live: var(--state-live);
+  --color-live-wash: var(--state-live-wash);
+  --color-proposed: var(--state-proposed);
+  --color-proposed-wash: var(--state-proposed-wash);
+  --color-expiring: var(--state-expiring);
+  --color-expiring-wash: var(--state-expiring-wash);
+  --color-retired: var(--state-retired);
+  --color-retired-wash: var(--state-retired-wash);
+
+  /* authorship -> text-ink-user / bg-ink-ai-wash ... */
+  --color-ink-user: var(--ink-user);
+  --color-ink-user-wash: var(--ink-user-wash);
+  --color-ink-user-edge: var(--ink-user-edge);
+  --color-ink-ai: var(--ink-ai);
+  --color-ink-ai-wash: var(--ink-ai-wash);
+  --color-ink-ai-edge: var(--ink-ai-edge);
+
+  /* frame chrome -> bg-frame / bg-frame-bar / border-frame */
+  --color-frame: var(--frame-bg);
+  --color-frame-bar: var(--frame-bar);
+  --color-frame-border: var(--frame-border);
+
+  --color-focus: var(--focus-ring);
+
+  /* radii -> rounded-panel / rounded-card */
+  --radius-panel: 12px;
+  --radius-card: 12px;
+  --radius-inset: 8px;
+
+  /* type scale -> text-micro / text-ui / text-h2 / text-h1 ...
+     Body and UI live at 13-15px. Display lives in the serif. The gap
+     between the two is the entire look. */
+  --text-micro: 0.6875rem; /* 11px - eyebrows, labels */
+  --text-micro--line-height: 1.1rem;
+  --text-micro--letter-spacing: 0.08em;
+  --text-ui: 0.8125rem; /* 13px - dense UI, metadata */
+  --text-ui--line-height: 1.3rem;
+  --text-ui-lg: 0.9375rem; /* 15px - body copy, the default */
+  --text-ui-lg--line-height: 1.5rem; /* 24px - packs copy, not a wall */
+  --text-prose: 1.0625rem; /* 17px - serif reading passages (product) */
+  --text-prose--line-height: 1.72;
+  --text-prose-lg: 1.1875rem;
+  --text-prose-lg--line-height: 1.7;
+
+  --text-title: 1.375rem; /* 22px - serif card titles */
+  --text-title--line-height: 1.75rem;
+  --text-title--letter-spacing: -0.012em;
+  --text-h3: 1.5rem; /* 24px */
+  --text-h3--line-height: 1.9rem;
+  --text-h3--letter-spacing: -0.014em;
+  --text-headline: 2.125rem; /* 34px - h2 */
+  --text-headline--line-height: 1.16;
+  --text-headline--letter-spacing: -0.018em;
+  --text-h2: 2.125rem; /* 34px - alias of headline */
+  --text-h2--line-height: 1.16;
+  --text-h2--letter-spacing: -0.018em;
+  --text-display: 2.8125rem; /* 45px - h1 */
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.022em;
+  --text-h1: 2.8125rem; /* 45px - alias of display */
+  --text-h1--line-height: 1.08;
+  --text-h1--letter-spacing: -0.022em;
+  --text-hero: 3.5rem; /* 56px - oversize opener, optional */
+  --text-hero--line-height: 1.04;
+  --text-hero--letter-spacing: -0.026em;
+
+  /* motion -> ease-page / ease-page-in-out. Deliberately not a redefinition
+     of Tailwind's own ease-out: the product components outside this page
+     keep the stock curve. */
+  --ease-page: var(--ease-out);
+  --ease-page-in-out: var(--ease-in-out);
+
+  /* reading measure -> max-w-measure / max-w-page ... */
+  --container-measure: var(--measure-prose);
+  --container-narrow: var(--measure-narrow);
+  --container-wide: var(--measure-wide);
+  --container-page: var(--measure-page);
+}
+
+/* ===========================================================================
+   Base. Layered so Tailwind utilities always win over these defaults.
+   =========================================================================== */
+
+@layer base {
+  html {
+    background-color: var(--surface-page);
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--surface-page);
+    color: var(--text-secondary);
+    font-family: var(--font-geist), var(--font-inter), ui-sans-serif, system-ui,
+      sans-serif;
+    font-size: 0.9375rem; /* 15px */
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Every in-page anchor lands below the fixed nav pill rather than
+     under it. --nav-clearance is the pill's height plus its offset. */
+  section[id],
+  :target {
+    scroll-margin-top: var(--nav-clearance);
+  }
+
+  ::selection {
+    background-color: var(--accent-soft);
+    color: var(--text-primary);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  /* Serif display. Normal weight, never bold; bold serif reads as a book
+     jacket, normal weight reads as a company. */
+  .prepon-display {
+    font-family: var(--font-newsreader), Georgia, "Times New Roman", serif;
+    font-weight: 400;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  /* Prose defaults, applied by <Prose>. Serif, generous measure. */
+  .prepon-prose {
+    font-family: var(--font-newsreader), Georgia, "Times New Roman", serif;
+    font-size: var(--text-prose);
+    line-height: 1.72;
+    color: var(--text-primary);
+    max-width: var(--measure-prose);
+    font-variant-numeric: oldstyle-nums proportional-nums;
+  }
+
+  .prepon-prose p + p {
+    margin-top: 1.1em;
+  }
+
+  /* Small uppercase tracked label used by UI chrome and <Eyebrow>. */
+  .prepon-label {
+    font-family: var(--font-geist), var(--font-inter), ui-sans-serif, system-ui,
+      sans-serif;
+    font-size: var(--text-micro);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  /* Tabular figures for anything that reads as an instrument. */
+  .prepon-numeric {
+    font-variant-numeric: tabular-nums lining-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* The grain layer shared by every <Plate>. Monochrome fractal noise, no
+     image file. Kept here so the data URI is parsed once. */
+  .prepon-grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 220px 220px;
+  }
+}
+
+@layer utilities {
+  /* The page's vertical rhythm, as classes.
+
+     These carry one extra element selector on purpose: the Section
+     primitive ships its own py-* utilities, and the rhythm has to live in
+     one place rather than being re-argued at five call sites. */
+  section.prepon-band {
+    padding-block: var(--band-y);
+  }
+
+  section.prepon-band-lg {
+    padding-block: var(--band-y-lg);
+  }
+
+  /* The seam where this band is followed immediately by another one: its
+     bottom padding gives way so the two do not stack into a void. */
+  section.prepon-band-seam {
+    padding-bottom: var(--band-y-tight);
+  }
+
+  /* A section header down to the content it introduces. */
+  header.prepon-band-head {
+    margin-bottom: var(--head-gap);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
